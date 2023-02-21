@@ -13,4 +13,4 @@ export const users = [
    },
 ]
 
-export const titleTable = ['User_id', 'Name', 'Pay_id', 'status']
+export const titleTable: Array<String> = ['User_id', 'Name', 'Pay_id', 'status']

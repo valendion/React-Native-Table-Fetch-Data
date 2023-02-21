@@ -1,14 +1,22 @@
-import {View, Text, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import React from 'react'
 import {DataTable} from 'react-native-paper'
-import {users} from '../constans/constans'
-import TableTitle from './TableTitle'
+import {titleTable, users} from '../constans/constans'
 
 const TabelComponent = () => (
    <View style={style.container}>
       <DataTable>
          <DataTable.Header style={style.headerBorder}>
-            <TableTitle />
+            {titleTable.map((value, index) => (
+               <DataTable.Title key={index}>{value}</DataTable.Title>
+            ))}
+
+            <View>
+               <DataTable.Title>1</DataTable.Title>
+               <DataTable.Title>1</DataTable.Title>
+               <DataTable.Title>1</DataTable.Title>
+               <DataTable.Title>1</DataTable.Title>
+            </View>
          </DataTable.Header>
 
          <DataTableRow />
