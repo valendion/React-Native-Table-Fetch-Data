@@ -14,3 +14,7 @@ export const users = [
 ]
 
 export const titleTable: Array<String> = ['User_id', 'Name', 'Pay_id', 'status']
+
+export const baseUrl = 'https://devapi.pepcorns.com/api/test/'
+export const allPaymentUrl = `${baseUrl}getAllPayments`
+export const allUserUrl = `${baseUrl}getAllUsers`
