@@ -15,6 +15,6 @@ export class Userpayment {
       this.name = name
       this.pay_id = pay_id
       this.pay_ref = pay_ref
-      this.status = status == 0 ? 'failed' : 'active'
+      this.status = status === 0 ? 'failed' : 'active'
    }
 }

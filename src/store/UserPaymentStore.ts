@@ -7,8 +7,10 @@ class UserPaymentStore {
    @observable
    responseUserPayment: ResponseUserPayment = new ResponseUserPayment([])
 
-   networkServices = new NetworkServices()
-   userPaymentRepository = new UserPaymentRepository(this.networkServices)
+   private networkServices = new NetworkServices()
+   private userPaymentRepository = new UserPaymentRepository(
+      this.networkServices,
+   )
 
    @action async getUserPayment() {
       await this.userPaymentRepository
