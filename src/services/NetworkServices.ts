@@ -1,28 +1,19 @@
 import {ResponseUserPayment} from '../model/ResponseUserPayment'
 import {client} from './ClientAxios'
-import {allPaymentUrl} from '../constans/constans'
+import {allUser} from '../constans/constans'
 import {Userpayment} from '../model/UserPayment'
+import {ResponseUser} from '../model/ResponseUser'
 
 export class NetworkServices {
-   async getAllPayment(): Promise<ResponseUserPayment> {
+   async getAllPayment(): Promise<ResponseUser> {
+      let responseUser: ResponseUser = {} as ResponseUser
       try {
-         const payments = await client.get(allPaymentUrl)
-
-         const responseUserPayment = payments.data.response.map(
-            (userPayment: Userpayment) =>
-               new Userpayment(
-                  userPayment.user_id,
-                  userPayment.name,
-                  userPayment.pay_id,
-                  userPayment.pay_ref,
-                  +userPayment.status,
-               ),
-         )
-
-         return new ResponseUserPayment(responseUserPayment)
+         const payments = await client.get(allUser)
+         responseUser = payments.data as ResponseUser
+         return responseUser
       } catch (error) {
          console.log(error)
-         return new ResponseUserPayment([])
+         return responseUser
       }
    }
 }

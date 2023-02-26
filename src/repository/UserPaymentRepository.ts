@@ -1,3 +1,4 @@
+import {ResponseUser} from '../model/ResponseUser'
 import {ResponseUserPayment} from '../model/ResponseUserPayment'
 import {NetworkServices} from '../services/NetworkServices'
 
@@ -8,7 +9,7 @@ class UserPaymentRepository {
       this.networkServices = networkServices
    }
 
-   getAllPayment(): Promise<ResponseUserPayment> {
+   getAllPayment(): Promise<ResponseUser> {
       return this.networkServices.getAllPayment()
    }
 }

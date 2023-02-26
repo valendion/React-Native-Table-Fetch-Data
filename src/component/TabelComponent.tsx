@@ -1,13 +1,16 @@
 import {View, StyleSheet} from 'react-native'
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {DataTable} from 'react-native-paper'
 import {titleTable} from '../constans/constans'
 import {observer} from 'mobx-react'
-import userPaymentStore from '../store/UserPaymentStore'
+
 import {ResponseUserPayment} from '../model/ResponseUserPayment'
-import {Userpayment} from '../model/UserPayment'
+import {RootStoreContext} from '../store/UserPaymentStore'
+import {ResponseUser} from '../model/ResponseUser'
 
 const TabelComponent = observer(() => {
+   const {userPaymentStore} = useContext(RootStoreContext)
+   const [isShowTableShow, setIsShowTableShow] = useState(false)
    useEffect(() => {
       userPaymentStore.getUserPayment()
    })
@@ -20,21 +23,22 @@ const TabelComponent = observer(() => {
                ))}
             </DataTable.Header>
 
-            <DataTableRow data={userPaymentStore.responseUserPayment} />
+            {userPaymentStore.responseUser.data ? (
+               <DataTableRow data={userPaymentStore.responseUser} />
+            ) : null}
          </DataTable>
       </View>
    )
 })
 
-const DataTableRow = (props: {data: ResponseUserPayment}) => {
+const DataTableRow = (props: {data: ResponseUser}) => {
    return (
       <View>
-         {props.data.response.map((dataRow, index) => (
+         {props.data.data.map((dataRow, index) => (
             <DataTable.Row key={index} style={style.headerBorder}>
-               <DataTable.Cell>{dataRow.user_id}</DataTable.Cell>
-               <DataTable.Cell>{dataRow.name}</DataTable.Cell>
-               <DataTable.Cell>{dataRow.pay_id}</DataTable.Cell>
-               <DataTable.Cell>{dataRow.status}</DataTable.Cell>
+               <DataTable.Cell>{dataRow.id}</DataTable.Cell>
+               <DataTable.Cell>{dataRow.email}</DataTable.Cell>
+               <DataTable.Cell>{`${dataRow.first_name} ${dataRow.last_name}`}</DataTable.Cell>
             </DataTable.Row>
          ))}
       </View>

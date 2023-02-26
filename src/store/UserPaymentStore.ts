@@ -1,24 +1,32 @@
-import {observable, action} from 'mobx'
+import {observable, action, makeAutoObservable, runInAction} from 'mobx'
+import {createContext} from 'react'
+import {ResponseUser} from '../model/ResponseUser'
 import {ResponseUserPayment} from '../model/ResponseUserPayment'
 import UserPaymentRepository from '../repository/UserPaymentRepository'
 import {NetworkServices} from '../services/NetworkServices'
 
 class UserPaymentStore {
-   @observable
-   responseUserPayment: ResponseUserPayment = new ResponseUserPayment([])
+   responseUser: ResponseUser = {} as ResponseUser
 
+   constructor() {
+      makeAutoObservable(this)
+   }
    private networkServices = new NetworkServices()
    private userPaymentRepository = new UserPaymentRepository(
       this.networkServices,
    )
 
-   @action async getUserPayment() {
-      await this.userPaymentRepository
-         .getAllPayment()
-         .then(data => (this.responseUserPayment = data))
+   async getUserPayment() {
+      const allUSer = await this.userPaymentRepository.getAllPayment()
+
+      runInAction(() => (this.responseUser = allUSer))
    }
 }
 
-const userPaymentStore = new UserPaymentStore()
+class RootStore {
+   userPaymentStore = new UserPaymentStore()
+}
 
-export default userPaymentStore
+export const rootStore = new RootStore()
+
+export const RootStoreContext = createContext(rootStore)
